@@ -2,8 +2,9 @@ class UsersController < ApplicationController
 
   def signup
     user = User.new(user_params)
+    user.token = SecureRandom.uuid
     if user.save
-      render json: {status: 'SUCCESS', messege: 'Saved users', data:user},status: :ok
+      render json: {status: 200, result:user},status: :ok
     else
       render json: {status: 'ERROR', message: 'User not saved', data: user.errors}, status: :unprocessable_entity
     end
@@ -11,6 +12,6 @@ class UsersController < ApplicationController
 
   private
     def user_params
-      params.permit(:email, :password, :token)
+      params.permit(:email, :password)
     end
 end
