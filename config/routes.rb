@@ -3,4 +3,5 @@ Rails.application.routes.draw do
   post '/login', to: 'users#login'
 
   post '/book', to: 'books#create'
+  put '/book/:id', to: 'books#update'
 end

@@ -10,11 +10,19 @@ class BooksController < ApplicationController
     book.user_id = @current_user.id
     book.image_url = upload_image(Base64.urlsafe_decode64(params[:image_url]))
     if book.save
-      #render json: {status: 200, data: book},status: :ok
       render_json_success(book)
     else
-      #render json: {status: 'ERROR', message: 'Book not saved', data: book.errors}, status: :unprocessable_entity
       render_json_failure("Cannot saved book")
+    end
+  end
+
+  def update
+    book = Book.find(params[:id])
+    params[:image_url] = upload_image(Base64.urlsafe_decode64(params[:image_url]))
+    if book.update_attributes(book_params)
+      render_json_success(book)
+    else
+      render_json_failure("Cannot update book")
     end
   end
 
