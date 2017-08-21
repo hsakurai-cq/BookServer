@@ -1,6 +1,7 @@
 require 'httpclient'
 
 class BooksController < ApplicationController
+  before_action :authenticate_user!
 
   def create
     time_stamp = Time.now.to_i.to_s
@@ -23,6 +24,7 @@ class BooksController < ApplicationController
     puts result_hash['data']['link']
 
     book = Book.new(book_params)
+    book.user_id = @current_user.id
     book.image_url = result_hash['data']['link']
     if book.save
       render json: {status: 200, data: book},status: :ok
