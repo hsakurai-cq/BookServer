@@ -6,7 +6,8 @@ class BooksController < ApplicationController
 
   def index
     if page = params[:page]
-      books = Book.where(user_id: @current_user.id).order(:created_at).limit(page.to_i)
+      #books = Book.where(user_id: @current_user.id).order(:created_at).limit(page.to_i)
+      books = @current_user.books.order(:created_at).limit(page.to_i)
       render_json_success(books)
     else
       render_json_failure("Wrong Paging")
