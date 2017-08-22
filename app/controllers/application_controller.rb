@@ -4,7 +4,7 @@ class ApplicationController < ActionController::API
     if current_user = User.find_by(token: request.headers[:Authorization])
       @current_user = current_user
     else
-      render json: {error: "No Authorization"}, status: :bad_request
+      render json: {status: 401, error: "No Authorization"}, status: :unauthorized
     end
   end
 
@@ -13,6 +13,6 @@ class ApplicationController < ActionController::API
   end
 
   def render_json_failure(message)
-    render json: {status: 'ERROR', message: message}, status: :unprocessable_entity
+    render json: {status: 422, message: message}, status: :unprocessable_entity
   end
 end
