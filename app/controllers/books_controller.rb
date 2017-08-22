@@ -2,8 +2,16 @@ require 'httpclient'
 
 class BooksController < ApplicationController
   include ImageHelper
-
   before_action :authenticate_user!
+
+  def index
+    if page = params[:page]
+      books = Book.where(user_id: @current_user.id).order(:created_at).limit(page.to_i)
+      render_json_success(books)
+    else
+      render_json_failure("No page")
+    end
+  end
 
   def create
     book = Book.new(book_params)

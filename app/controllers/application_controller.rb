@@ -9,7 +9,7 @@ class ApplicationController < ActionController::API
   end
 
   def render_json_success(object)
-    render json: {status: 200, data: object},status: :ok
+    render json: {status: 200, result: object},status: :ok
   end
 
   def render_json_failure(message)
