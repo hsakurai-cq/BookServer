@@ -2,7 +2,6 @@ class UsersController < ApplicationController
 
   def signup
     user = User.new(user_params)
-    user.token = SecureRandom.uuid
     if user.save
       render_user_action_success(user)
     else
