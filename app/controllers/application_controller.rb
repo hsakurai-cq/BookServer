@@ -8,8 +8,12 @@ class ApplicationController < ActionController::API
     end
   end
 
-  def render_json_success(object)
-    render json: {code: 200, result: object},status: :ok
+  def render_user_action_success(object)
+    render json: {code: 200, result: UserSerializer.new(object)},status: :ok
+  end
+
+  def render_book_action_success(object)
+    render json: {code: 200, result: BookSerializer.new(object)},status: :ok
   end
 
   def render_json_failure(message)

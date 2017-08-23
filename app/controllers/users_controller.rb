@@ -4,7 +4,7 @@ class UsersController < ApplicationController
     user = User.new(user_params)
     user.token = SecureRandom.uuid
     if user.save
-      render_json_success(user)
+      render_user_action_success(user)
     else
       render_json_failure("Cannot signup")
     end
@@ -13,7 +13,7 @@ class UsersController < ApplicationController
   def login
     user = User.find_by(email: params[:email].downcase)
     if user && user.authenticate(params[:password])
-      render_json_success
+      render_user_action_success(user)
     else
       render_json_failure("Cannot login")
     end
