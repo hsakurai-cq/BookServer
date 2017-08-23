@@ -5,7 +5,7 @@ module ImageHelper
   def upload_image(encoded_image_string)
     time_stamp = Time.now.to_i.to_s
     file_path = "public/img/#{time_stamp}.jpg"
-    image_data = Base64.urlsafe_decode64(params[:image_url])
+    image_data = Base64.urlsafe_decode64(encoded_image_string)
     File.open(file_path, 'wb') do |f|
       #binding.pry
       f.write(image_data)

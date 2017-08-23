@@ -17,7 +17,7 @@ class BooksController < ApplicationController
   def create
     book = Book.new(book_params)
     book.user_id = @current_user.id
-    book.image_url = upload_image(Base64.urlsafe_decode64(params[:image_url]))
+    book.image_url = upload_image(params[:image_url])
     if book.save
       render_json_success(book)
     else
@@ -27,7 +27,7 @@ class BooksController < ApplicationController
 
   def update
     book = Book.find(params[:id])
-    params[:image_url] = upload_image(Base64.urlsafe_decode64(params[:image_url]))
+    params[:image_url] = upload_image(params[:image_url])
     if book.update_attributes(book_params)
       render_json_success(book)
     else
