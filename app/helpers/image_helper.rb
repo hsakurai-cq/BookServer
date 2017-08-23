@@ -13,7 +13,7 @@ module ImageHelper
 
     http_client = HTTPClient.new
     url = 'https://api.imgur.com/3/image'
-    auth_header = { 'Authorization' => 'Client-ID d285f83097c5323'}
+    auth_header = { 'Authorization' => 'Client-ID ' + ENV['IMGUR_CLIENT_ID']}
     File.open(file_path) do |file|
       body = { 'image' => file }
       @res = http_client.post(URI.parse(url), body, auth_header)
@@ -23,6 +23,5 @@ module ImageHelper
     result_hash = JSON.load(@res.body)
     #p result_hash
     return result_hash['data']['link']
-
   end
 end
