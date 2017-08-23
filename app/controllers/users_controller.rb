@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-  def signup
+  def sign_up
     user = User.new(user_params)
     if user.save
       render_user_action_success(user)
