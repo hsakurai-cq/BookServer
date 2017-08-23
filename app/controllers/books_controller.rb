@@ -39,5 +39,4 @@ class BooksController < ApplicationController
     def book_params
       params.permit(:name, :price, :purchase_date, :image_url)
     end
-
 end
