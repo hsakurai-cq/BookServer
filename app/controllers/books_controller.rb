@@ -10,7 +10,7 @@ class BooksController < ApplicationController
     if page = params[:page].to_i
       #books = Book.where(user_id: @current_user.id).order(:created_at).limit(page.to_i)
       books = @current_user.books.order(:created_at).limit(2).offset((page - 1) * 2)
-      render json: {code: 200,
+        render json: {code: 200,
                       # result: BookSerializer.new(books, each_serializer: BookSerializer),
                       result: ActiveModel::Serializer::CollectionSerializer.new(books, each_serializer: BookSerializer),
                       total_count: 2 * page,
@@ -31,7 +31,7 @@ class BooksController < ApplicationController
     if book.save
       render_book_action_success(book)
     else
-      render_json_failure("Cannot saved book")
+      render_json_failure("Can not save book")
     end
   end
 
