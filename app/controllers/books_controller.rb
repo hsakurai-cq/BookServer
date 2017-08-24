@@ -3,6 +3,7 @@ require 'httpclient'
 class BooksController < ApplicationController
   include ImageHelper
   before_action :authenticate_user!
+  before_action :change_image_to_url
 
   @@current_page = 1
   LIMIT_NUMBER = 2
@@ -27,7 +28,6 @@ class BooksController < ApplicationController
 
   def create
     book = @current_user.books.build(book_params)
-    set_image_to_book(book, params[:image])
     if book.save
       render_book_action_success(book)
     else
@@ -37,7 +37,6 @@ class BooksController < ApplicationController
 
   def update
     book = Book.find(params[:id])
-    set_image_to_book(book, params[:image])
     if book.update_attributes(book_params)
       render_book_action_success(book)
     else
@@ -50,7 +49,7 @@ class BooksController < ApplicationController
       params.permit(:name, :price, :purchase_date, :image, :page)
     end
 
-    def set_image_to_book(book, image_param)
-      book.image = upload_image(image_param)
+    def change_image_to_url
+      params[:image] = upload_image(params[:image])
     end
 end
