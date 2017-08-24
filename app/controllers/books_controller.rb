@@ -5,18 +5,19 @@ class BooksController < ApplicationController
   before_action :authenticate_user!
 
   @@current_page = 1
+  LIMIT_NUMBER = 2
 
   def index
-    if page = params[:page].to_i
-      #books = Book.where(user_id: @current_user.id).order(:created_at).limit(page.to_i)
-      books = @current_user.books.order(:created_at).limit(2).offset((page - 1) * 2)
+    if page = params[:page]
+      page_int = page.to_i
+      books = @current_user.books.order(:created_at).limit(LIMIT_NUMBER).offset((page_int - 1) * 2)
         render json: {code: 200,
                       # result: BookSerializer.new(books, each_serializer: BookSerializer),
                       result: ActiveModel::Serializer::CollectionSerializer.new(books, each_serializer: BookSerializer),
-                      total_count: 2 * page,
-                      total_pages: page,
+                      total_count: 2 * page_int,
+                      total_pages: page_int,
                       current_page: @@current_page,
-                      limit: 2 * page,
+                      limit: 2 * page_int,
                     },status: :ok
       @@current_page += 1
     else
