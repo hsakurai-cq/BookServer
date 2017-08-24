@@ -27,7 +27,6 @@ class BooksController < ApplicationController
 
   def create
     book = @current_user.books.build(book_params)
-    book.user_id = @current_user.id
     set_image_to_book(book, params[:image])
     if book.save
       render_book_action_success(book)

@@ -23,11 +23,11 @@ module ImageHelper
 
     File.open(@@file_path) do |file|
       body = { 'image' => file }
-      res = http_client.post(URI.parse(url), body, auth_header)
+      @res = http_client.post(URI.parse(url), body, auth_header)
     end
 
     File.delete(@@file_path)
-    result_hash = JSON.load(res.body)
+    result_hash = JSON.load(@res.body)
     #p result_hash
     result_hash['data']['link']
   end
