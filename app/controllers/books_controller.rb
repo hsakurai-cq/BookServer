@@ -28,7 +28,7 @@ class BooksController < ApplicationController
   def create
     book = Book.new(book_params)
     book.user_id = @current_user.id
-    book.image = upload_image(params[:image])
+    set_image_to_book(book, params[:image])
     if book.save
       render_book_action_success(book)
     else
@@ -38,7 +38,7 @@ class BooksController < ApplicationController
 
   def update
     book = Book.find(params[:id])
-    params[:image] = upload_image(params[:image])
+    set_image_to_book(book, params[:image])
     if book.update_attributes(book_params)
       render_book_action_success(book)
     else
@@ -49,5 +49,9 @@ class BooksController < ApplicationController
   private
     def book_params
       params.permit(:name, :price, :purchase_date, :image, :page)
+    end
+
+    def set_image_to_book(book, image_param)
+      book.image = upload_image(image_param)
     end
 end
